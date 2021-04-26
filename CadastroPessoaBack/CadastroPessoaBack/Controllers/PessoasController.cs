@@ -32,6 +32,7 @@ namespace CadastroPessoaBack.Controllers
         public async Task<ActionResult<Pessoa>> GetPessoa(int id)
         {
             var pessoa = await _context.Pessoas.FindAsync(id);
+            pessoa.Enderecos = await _context.Enderecos.Where(x => x.PessoaId == id).ToListAsync();
 
             if (pessoa == null)
             {
@@ -41,36 +42,6 @@ namespace CadastroPessoaBack.Controllers
             return pessoa;
         }
 
-        // PUT: api/Pessoas/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPessoa(int id, Pessoa pessoa)
-        {
-            if (id != pessoa.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(pessoa).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PessoaExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
 
         // POST: api/Pessoas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -78,6 +49,7 @@ namespace CadastroPessoaBack.Controllers
         public async Task<ActionResult<Pessoa>> PostPessoa(Pessoa pessoa)
         {
             _context.Pessoas.Add(pessoa);
+            _context.Enderecos.Add((Endereco)pessoa.Enderecos);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetPessoa", new { id = pessoa.Id }, pessoa);
@@ -97,11 +69,6 @@ namespace CadastroPessoaBack.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool PessoaExists(int id)
-        {
-            return _context.Pessoas.Any(e => e.Id == id);
         }
     }
 }

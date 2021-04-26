@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CadastroPessoaBack.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210420024531_Inicial")]
+    [Migration("20210425231003_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,7 +40,7 @@ namespace CadastroPessoaBack.Migrations
                     b.Property<string>("Numero")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int?>("PessoaId")
+                    b.Property<int>("PessoaId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -61,7 +61,7 @@ namespace CadastroPessoaBack.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("varchar(11) CHARACTER SET utf8mb4");
 
-                    b.Property<DateTime>("DataAniversario")
+                    b.Property<DateTime>("DataNascimento")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
@@ -78,11 +78,16 @@ namespace CadastroPessoaBack.Migrations
 
             modelBuilder.Entity("CadastroPessoaBack.Data.Endereco", b =>
                 {
-                    b.HasOne("CadastroPessoaBack.Data.Pessoa", "Pessoa")
-                        .WithMany()
-                        .HasForeignKey("PessoaId");
+                    b.HasOne("CadastroPessoaBack.Data.Pessoa", null)
+                        .WithMany("Enderecos")
+                        .HasForeignKey("PessoaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    b.Navigation("Pessoa");
+            modelBuilder.Entity("CadastroPessoaBack.Data.Pessoa", b =>
+                {
+                    b.Navigation("Enderecos");
                 });
 #pragma warning restore 612, 618
         }

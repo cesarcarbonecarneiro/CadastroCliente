@@ -18,6 +18,7 @@ namespace CadastroPessoaBack
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,13 +29,17 @@ namespace CadastroPessoaBack
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
+            services.AddMvc(options => options.EnableEndpointRouting = false);
+
             string mySqlConnection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContextPool<AppDbContext>(options => options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CadastroPessoaBack", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CadastroPessoa", Version = "v1" });
             });
         }
 
@@ -45,12 +50,16 @@ namespace CadastroPessoaBack
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CadastroPessoaBack v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CadastroPessoa v1"));
             }
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+            app.UseMvc();
 
             app.UseAuthorization();
 

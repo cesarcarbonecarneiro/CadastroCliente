@@ -17,7 +17,7 @@ namespace CadastroPessoaBack.Migrations
                     Nome = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: false),
                     Cpf = table.Column<string>(type: "varchar(11) CHARACTER SET utf8mb4", maxLength: 11, nullable: false),
                     Email = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
-                    DataAniversario = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    DataNascimento = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,7 +30,7 @@ namespace CadastroPessoaBack.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    PessoaId = table.Column<int>(type: "int", nullable: true),
+                    PessoaId = table.Column<int>(type: "int", nullable: false),
                     Distrito = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     Bairro = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
                     Logradouro = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
@@ -45,7 +45,7 @@ namespace CadastroPessoaBack.Migrations
                         column: x => x.PessoaId,
                         principalTable: "Pessoas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

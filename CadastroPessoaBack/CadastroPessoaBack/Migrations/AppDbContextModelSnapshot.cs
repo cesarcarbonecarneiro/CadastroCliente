@@ -38,7 +38,7 @@ namespace CadastroPessoaBack.Migrations
                     b.Property<string>("Numero")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int?>("PessoaId")
+                    b.Property<int>("PessoaId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -59,7 +59,7 @@ namespace CadastroPessoaBack.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("varchar(11) CHARACTER SET utf8mb4");
 
-                    b.Property<DateTime>("DataAniversario")
+                    b.Property<DateTime>("DataNascimento")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
@@ -76,12 +76,11 @@ namespace CadastroPessoaBack.Migrations
 
             modelBuilder.Entity("CadastroPessoaBack.Data.Endereco", b =>
                 {
-                    b.HasOne("CadastroPessoaBack.Data.Pessoa", "Pessoa")
+                    b.HasOne("CadastroPessoaBack.Data.Pessoa", null)
                         .WithMany("Enderecos")
                         .HasForeignKey("PessoaId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Pessoa");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CadastroPessoaBack.Data.Pessoa", b =>
