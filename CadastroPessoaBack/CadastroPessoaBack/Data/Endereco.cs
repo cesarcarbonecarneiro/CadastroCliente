@@ -8,7 +8,7 @@ namespace CadastroPessoaBack.Data
     public class Endereco
     {
         public virtual int Id { get; set; }
-        public virtual Pessoa Pessoa { get; set; }
+        public virtual int PessoaId { get; set; }
         public virtual string Distrito { get; set; }
         public virtual string Bairro { get; set; }
         public virtual string Logradouro { get; set; }

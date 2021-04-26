@@ -32,6 +32,7 @@ namespace CadastroPessoaBack.Controllers
         public async Task<ActionResult<Pessoa>> GetPessoa(int id)
         {
             var pessoa = await _context.Pessoas.FindAsync(id);
+            pessoa.Enderecos = await _context.Enderecos.Where(x => x.PessoaId == id).ToListAsync();
 
             if (pessoa == null)
             {
@@ -78,6 +79,7 @@ namespace CadastroPessoaBack.Controllers
         public async Task<ActionResult<Pessoa>> PostPessoa(Pessoa pessoa)
         {
             _context.Pessoas.Add(pessoa);
+            _context.Enderecos.Add((Endereco)pessoa.Enderecos);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetPessoa", new { id = pessoa.Id }, pessoa);

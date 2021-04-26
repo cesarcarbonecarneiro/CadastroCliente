@@ -21,7 +21,7 @@ namespace CadastroPessoaBack.Data
             modelBuilder.Entity<Pessoa>()
                 .Property(p => p.Nome)
                     .IsRequired();
-            
+
             modelBuilder.Entity<Pessoa>()
                 .Property(p => p.Cpf)
                     .HasMaxLength(11)
@@ -29,9 +29,7 @@ namespace CadastroPessoaBack.Data
 
             modelBuilder.Entity<Pessoa>()
                 .HasMany(e => e.Enderecos)
-                    .WithOne(p => p.Pessoa)
-                        .OnDelete(DeleteBehavior.Cascade);
-
+                    .WithOne();
         }
     }
 }
