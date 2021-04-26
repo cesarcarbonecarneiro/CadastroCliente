@@ -37,6 +37,13 @@ export class PessoasComponent implements OnInit {
   cadastrarPessoa(){
     this.inserirPessoa = true;
   }
+
+  salvarPessoa(pessoa: Pessoa){
+    this.pessoaService.salvarPessoa(pessoa);
+    this.editarPessoa = false;
+    this.inserirPessoa = false;
+
+  }
   voltar(){
     this.editarPessoa = false;
     this.inserirPessoa = false;

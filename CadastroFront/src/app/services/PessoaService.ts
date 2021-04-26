@@ -21,4 +21,7 @@ export class PessoaServiceService {
       return this.http.get<Pessoa>(`${this.baseUrl}api/Pessoas/${id}`);
     }
 
+    salvarPessoa(pessoa: Pessoa){
+      return this.http.post(`${this.baseUrl}api/Pessoas/${pessoa}`);
+    }
 }

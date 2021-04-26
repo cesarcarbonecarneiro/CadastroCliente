@@ -15,18 +15,36 @@
                   <div ng-class="{&quot;has-error&quot;: formularioGrid.producaoMensal.$dirty &amp;&amp; formularioGrid.producaoMensal.$invalid}" class="has-feedback">
                     <div class="row">
                       <div class="col-md-5">
-                        <input class="form-control" type="text" ng-model="" required="required" placeholder="Distrito"/><br>
-                        <input class="form-control" type="text" ng-model="" required="required" placeholder="Bairro"/><br>
-                        <input class="form-control" type="text" ng-model="" required="required" placeholder="Logradouro"/><br>
-                        <input class="form-control" type="text" ng-model="" required="required" placeholder="Número"/><br>
-                        <input class="form-control" type="text" ng-model="" required="required" placeholder="Complemento"/><br>
+                        <input class="form-control" type="text" ng-model="pessoaSelecionada.enderecos.distrito" required="required" placeholder="Distrito"/><br>
+                        <input class="form-control" type="text" ng-model="pessoaSelecionada.enderecos.bairro" required="required" placeholder="Bairro"/><br>
+                        <input class="form-control" type="text" ng-model="pessoaSelecionada.enderecos.logradouro" required="required" placeholder="Logradouro"/><br>
+                        <input class="form-control" type="text" ng-model="pessoaSelecionada.enderecos.numero" required="required" placeholder="Número"/><br>
+                        <input class="form-control" type="text" ng-model="pessoaSelecionada.enderecos.complemento" required="required" placeholder="Complemento"/><br>
                       </div>
                     </div>
                   </div>
                 </div>
+                <table class="table table-hover table-responsive">
+                  <thead>
+                    <th class="header">Distrito</th>
+                    <th class="header">Bairro</th>
+                    <th class="header">Logradouro</th>
+                    <th class="header">Numero</th>
+                    <th class="header">Complemento</th>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="let endereco of enderecosGrid">
+                      <td>{{endereco.distrito}}</td>
+                      <td>{{endereco.bairro}}</td>
+                      <td>{{endereco.logradouro}}</td>
+                      <td>{{endereco.numero}}</td>
+                      <td>{{endereco.complemento}}</td>
+                    </tr>
+                  </tbody>
+                </table>
                 <div class="row">
                   <div class="col-md-12 text-left">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Adicionar</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus" (click)="adicionarEnderecoGrid(endereco)"></i> Adicionar</button>
                   </div>
                 </div>
               </div>
@@ -51,10 +69,10 @@
   <h2>Cadastrar Pessoa</h2>
     <form>
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Nome" required="required"><br>
-          <input type="text" class="form-control" placeholder="Digite o CPF" required="required" /><br>
-          <input type="email" class="form-control" placeholder="Email" required="required"><br>
-          <input type="date" class="form-control"  placeholder="Data de Nascimento" required="required">
+          <input type="text" class="form-control" ng-model="pessoaSelecionada.nome" placeholder="Nome" required="required"><br>
+          <input type="text" class="form-control" ng-model="pessoaSelecionada.cpf" placeholder="Digite o CPF" required="required" /><br>
+          <input type="email" class="form-control" ng-model="pessoaSelecionada.email" placeholder="Email" required="required"><br>
+          <input type="date" class="form-control"  ng-model="pessoaSelecionada.datanascimento" placeholder="Data de Nascimento" required="required">
         </div>
         <form name="formularioGrid" ng-submit="" class="form-horizontal">
             <div>
@@ -64,18 +82,18 @@
                   <div ng-class="{&quot;has-error&quot;: formularioGrid.producaoMensal.$dirty &amp;&amp; formularioGrid.producaoMensal.$invalid}" class="has-feedback">
                     <div class="row">
                       <div class="col-md-5">
-                        <input class="form-control" type="text" ng-model="endereco.nome" required="required" placeholder="Distrito"/><br>
-                        <input class="form-control" type="text" ng-model="endere" required="required" placeholder="Bairro"/><br>
-                        <input class="form-control" type="text" ng-model="" required="required" placeholder="Logradouro"/><br>
-                        <input class="form-control" type="text" ng-model="" required="required" placeholder="Número"/><br>
-                        <input class="form-control" type="text" ng-model="" required="required" placeholder="Complemento"/><br>
+                        <input class="form-control" type="text" ng-model="pessoaSelecionada.enderecos.distrito" required="required" placeholder="Distrito"/><br>
+                        <input class="form-control" type="text" ng-model="pessoaSelecionada.enderecos.bairro" required="required" placeholder="Bairro"/><br>
+                        <input class="form-control" type="text" ng-model="pessoaSelecionada.enderecos.logradouro" required="required" placeholder="Logradouro"/><br>
+                        <input class="form-control" type="text" ng-model="pessoaSelecionada.enderecos.numero" required="required" placeholder="Número"/><br>
+                        <input class="form-control" type="text" ng-model="pessoaSelecionada.enderecos.complemento" required="required" placeholder="Complemento"/><br>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-12 text-left">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Adicionar</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus" (click)="adicionarEnderecoGrid(endereco)" ></i> Adicionar</button>
                   </div>
                 </div>
               </div>
@@ -91,13 +109,13 @@
             <button class="btn btn-primary" (click)="voltar()">Voltar</button>
         </td>
         <td>
-            <button type="submit" class="btn btn-success">Cadastrar</button>
+            <button type="submit" class="btn btn-success" (click)="cadastrarPessoa(pessoa)">Cadastrar</button>
         </td>        
     </form>
     <br>
 </div>
 <div *ngIf="!editarPessoa && !inserirPessoa">
-    <button type="button" class="btn btn-primary" (click)="cadastrarPessoa()">Inserir Pessoa</button><br>
+    <button type="button" class="btn btn-primary" (click)="salvarPessoa(pessoaSelecionada)">Inserir Pessoa</button><br>
     <br>
     <table class="table table-hover">
         <thead class="thead-light">
